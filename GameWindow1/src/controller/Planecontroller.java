@@ -1,8 +1,11 @@
-package Planecontroller;
+package controller;
 
 
-import Planemodel.Planemodel;
-import Planeview.Planeview;
+//import controller.Controller;
+
+import model.Model;
+import utils.Utils;
+import view.View;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -10,28 +13,30 @@ import java.awt.event.KeyEvent;
 /**
  * Created by Dell on 05/12/2016.
  */
-public class Planecontroller {
-    public Planemodel planemodel;
-    public Planeview planeview;
+public class Planecontroller extends Controller{
+    private static final int SPEED = 5;
+
     public KeySetting keySetting;
 
-    public Planecontroller(Planemodel planemodel, Planeview planeview) {
-        this.planemodel = planemodel;
-        this.planeview = planeview;
+    public Planecontroller(Model model, View view) {
+        super(model, view);
     }
+
+
     public void Keypressed(KeyEvent e){
         int keyCode;
         keyCode = e.getKeyCode();
         if(keyCode == keySetting.keyup)
-            planemodel.move(0,-5);
+            model.move(0,-SPEED);
         else if(keyCode==keySetting.keydown)
-            planemodel.move(0,+5);
+            model.move(0,SPEED);
         else if(keyCode==keySetting.keyleft)
-            planemodel.move(-5,0);
+            model.move(-SPEED,0);
         else if(keyCode==keySetting.keyright)
-            planemodel.move(+5,0);
+            model.move(SPEED,0);
     }
-    public void draw(Graphics g){
-        planeview.draw(g,planemodel);
+    public static Planecontroller createPlane(int x,int y){
+        Planecontroller planecontroller = new Planecontroller(new Model(x,y,70,50),new View(Utils.loadimage("resources/plane3.png")));
+        return planecontroller;
     }
 }

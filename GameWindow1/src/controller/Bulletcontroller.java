@@ -1,27 +1,22 @@
-package Planecontroller;
+package controller;
 
-import Planemodel.Bulletmodel;
-import Planeview.Bulletview;
+import controller.Controller;
+import model.Model;
+import view.View;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 /**
  * Created by Dell on 05/12/2016.
  */
-public class Bulletcontroller {
-    public Bulletmodel bulletmodel;
-    public Bulletview bulletview;
+public class Bulletcontroller extends Controller {
 
-
-    public Bulletcontroller(Bulletmodel bulletmodel, Bulletview bulletview) {
-        this.bulletmodel = bulletmodel;
-        this.bulletview = bulletview;
+    public Bulletcontroller(Model model, View view) {
+        super(model, view);
     }
+
     public void move(){
-        bulletmodel.move(0,-5);
+        model.move(0,-5);
     }
-    public void draw(Graphics g){
-        bulletview.draw(g,bulletmodel);
-    }
+
 }
