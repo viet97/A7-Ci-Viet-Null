@@ -21,7 +21,8 @@ public class Controller {
 
     }
     public void draw(Graphics g){
-        view.draw(g,model);
+
+            view.draw(g, model);
     }
 
     public Model getModel() {

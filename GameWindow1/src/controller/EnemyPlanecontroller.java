@@ -1,5 +1,6 @@
 package controller;
 
+import controller.managers.BodyManager;
 import model.Model;
 import utils.Utils;
 import view.View;
@@ -10,7 +11,8 @@ import java.util.Vector;
 /**
  * Created by Dell on 08/12/2016.
  */
-public class EnemyPlanecontroller extends Controller {
+public class EnemyPlanecontroller extends Controller implements Body  {
+    private int HP = 2;
     private int timecounter=0;
     private int n;
 
@@ -22,6 +24,7 @@ public class EnemyPlanecontroller extends Controller {
     public EnemyPlanecontroller(Model model, View view) {
         super(model, view);
         enemyBulletcontrollers = new Vector<>();
+        BodyManager.instance.register(this);
     }
 
     public void run() {
@@ -50,7 +53,7 @@ public class EnemyPlanecontroller extends Controller {
         super.draw(g);
 
         for(EnemyBulletcontroller enemyBulletcontroller : this.enemyBulletcontrollers){
-             enemyBulletcontroller.draw(g);
+            if (enemyBulletcontroller.getModel().isAlive())enemyBulletcontroller.draw(g);
         }
     }
 
@@ -61,4 +64,16 @@ public class EnemyPlanecontroller extends Controller {
         return enemyPlanecontroller;
     }
 
+    @Override
+    public void onContact(Body other) {
+
+        if (other instanceof Bulletcontroller) {
+            System.out.println("huhu");
+            HP = HP - 1;
+            if(HP == 0) {
+                this.model.setAlive(false);
+                BodyManager.instance.remove(this);
+            }
+        }
+    }
 }
